@@ -1,0 +1,898 @@
+/* ======== CONFIGURAÇÕES GERAIS ========= */
+/* 
+aplica reset basico e configura caixa de medição e fonte padrão.
+- margin/padding zerados para evitar estilos padrões diferentes entre navegadores.
+- box-sizing: border-box facilita p cálculo de Largura/altura (inclui padding e border).
+- font-family define a tipografia da página (Poppins é só um exemplo; carregue via Google Fonts)
+*/
+* {
+  margin: 0;  /* remove margens nativas */
+  padding: 0; /* remove espaçamentos nativos */
+  box-sizing: border-box; /* inclui padding/border no calculo de width/height */
+  font-family: "Poppins", Sans-Serif; /* fonte padrão para todo o site */
+}
+
+/*
+
+estilos do elento <body>.
+- background: cor de fundo principal.
+- color: cor padrão de texto ( usanda quando outros elementos não definirem cor).
+- height: 100vh garante que body tenha altura da jenela (ultil para Layouts full-height).
+- overflow-x: hidden evita barra de rolagem horizontal quando o menu esta fora da tela.
+
+*/
+body {
+  background: #fff8e7; /* amarelo suave por tras do layout */
+  color: #333; /* cinza escuro legivel para texto */
+  min-height: 100vh; /* pelo menos a altura da viewport, mas cresce com o conteudo */
+  overflow-x: hidden; /* evita scroll horizontal causado por elementos posicionados */
+  font-family: "Poppins", sans-serif; /* fonte padrão para todo o site */
+}
+
+/* ======== BOTÃO DE ABRIR MENU ======== */
+/*
+botão visivel na lateral para abrir a aba tipo celular.
+- position: fixed mantem o botão sempre visivel ao rolar a pagina.
+- top: 50% + tranform: transLateY(-50%) centraliza verticalmente.
+- left: 0 coloca encostado na borda esquerda.
+- z-index garante que o botão fique afrente dos outros elementos.
+- use arial-label no HTML para acessibilidade (ex.: <button id="cel-abrir" aria-label="abrir menu">).
+*/
+#cel-abrir {
+  font-size: 28px; /* tamanho do simbolo/icone do botão */
+  background: none; /* sem fundo para visual minimalista */
+  border: none; /* sem borda padrão do botão */
+  cursor: pointer; /* indica interatividade */
+  padding: 15px; /* aumenta area clicavel (boa pratica para touch) */
+  position: fixed; /* manté o botão preso na viewport */
+  top: 50%; /* posição inicial vertical */
+  left: 0px; /* encosta á borda esuqerda */
+  transform: translateY(-50%); /* corrige para ficar exatamente centralizado verticalmente */
+  z-index: 1100; /* acima de outros elementos */
+}
+
+
+/* ======== MENU LATERAL (NAV) ======== */
+/* 
+container do menu lateral:
+- position: fixed para ficar sempre na tela.
+- width controla a largura; ajuste para telas pequenas (ex.: 220px ou 80vw)
+- transform: transLateX(-100%) mantem o menu fora da tela inicialmente (fora á esquerda).
+- transition suaviza a entrada/saida ( transform é performático).
+- box-shadow menor que o botão e que a logo para garantir sobreposição adequada.
+Observação: para mresponsividade, você pode alterar width com media queries.
+*/
+#aba-cel {
+  position: fixed; /* fixo na viewport para comportamento de "menu móvel" */
+  top: 0; /* começa do topo */
+  left: 0; /* alinhado á esquerda */
+  height: 100%; /* ocupa a altura total da tela */
+  width: 250px; /* largura do menu (ajustavel) */
+  background: #ffdf6c; /* cor de fundo tema "colmeia" */
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2); /* sombra para descartar o menu */
+  transform: translateX(-100%); /* escondido fora da tela inicialmente */
+  transition: transform 0.3s ease; /* animeção suave ao abrir/fechar*/
+  z-index: 1500; /* abaixo do botão de abrir (1100) e da logo (1200) */
+}
+
+/*
+Classe que mostra o menu (deve ser adicionada/removida via JS).
+- quando .aberto, o transform volta para 0 e o menu aparece.
+- usar tranform em vez de left/top gera animações mais suaves e melhores em performace.
+*/
+#aba-cel.aberto {
+  transform: translateX(0); /* menu visivel */
+}
+
+/* ======= BOTÃO DE FECHAR MENU ======= */
+/*
+Botão interno para fechar o menu.
+- position: absolute relativo ao #aba-cel (por isso usamos absolute).
+- top/right posicionam o botão no canto superior direito do nav.
+- lembre de adicionar arial-label="Fechar menu" no HTML para acessibilidade.
+*/
+
+#cel-fechar {
+  background: none; /* visual Limpo */
+  border: none; /* sem borda */
+  font-size: 32px; /* destaque do icone "x" */
+  cursor: pointer; /* indica clicavel */
+  position: absolute; /* posiciona dentro da nav */
+  top: 10px; /* distancia do topo da nav */
+  right: 15px; /* distancia da borda direita da nav */
+}
+
+/* ======= LISTA DE LINKS DO MENU ======= */
+/*
+Estilização da lista interna do menu.
+- list-style: none remove marcadores.
+- margin-top coloca os LINKS abaixo do botão Fechar (ou de um header do menu).
+- text-align left é padrão em menus moveis (melhor para leitura).
+- cada link ocupa toda a largura com display: block, aumentando área de clique.
+- transition no link serve para deixar o hover mais suave.
+*/
+#aba-cel ul {
+list-style: none; /* romove bullets */
+margin-top: 80px; /* espaço para afastar do topo e do botão fechar */
+text-align: left; /* alinha o texto a esquerda */
+}
+
+#aba-cel ul li {
+  margin: 20px 0; /* espaçamento vertical entre itens*/
+}
+
+#aba-cel ul li a {
+text-decoration: none;/* remove sublinhado padrão */
+  color: #333; /* contraste com o fundo */
+  font-size:18px; /* legibilidade em telas touch */
+  padding: 10px 20px; /* area clicavel confortavel */
+  display: block; /* faz o link preencher a linha inteira */
+  transition: background 0.2s, transform 0.15s;/* transições sutis para hover focus */
+}
+
+/*
+Estado hover (mouse) ou focus (teclado) para acessibilidade.
+- background mais claro e bordas arredondadas.
+- tambem é indicado aplicar :focus-visible para acessibilidade no teclado.
+*/
+#aba-cel ul li a:hover,
+#aba-cel ul li a:focus {
+  background: #ffe88a;/* cor de destaque ao passar o mouse / foco */
+  border-radius: 10px; /* suaviza cantos ao destacar */
+  outline: none; /* remova apenas se houver alternativa visivel de foco */
+}
+
+/* ======= CONTEÚDO PRINCIPAL ======= */
+/* 
+Estilos do conteudo principal (main).
+- text-align: center centraliza conteúdo por padrão - altere se necessario para seções
+mais tradicionais.
+- padding: cria espeço para o conteúdo não bater na borda da viewport.
+- lembre-se: se o menu tiver largura fixa, vicê pode aplicar
+margin-inline-start no main quando o menu estiver aberti (via JS) para evitar sobreposição.
+*/
+
+main {
+  text-align: center; /* centraliza conteúdo*/
+  padding: 80px 20px; /* espaço interno para respeitar cabeçalho e margens */
+}
+
+h1 {
+  font-size: 26px; /* titulo principal com tamanho legivel */
+  color: #c59d00; /* tom dourado/mostarda que combina com o tema */
+  position: relative; /* cria contexto de empilhamento pro z-index funcionar */
+  z-index: 1500; /* mantem o titulo acima da animação da abelha guia (#animacaoGuia, z-index:1000) */
+}
+
+main > p {
+  position: relative;
+  z-index: 1500; /* mesma logica do h1: o texto de introdução fica acima da abelha guia */
+}
+
+p {
+  font-size: 18px; /* parágrafos com boa leitura em dispoaitivos móveis  */
+  margin-top: 10px; /* separação entre titulo e texto */
+}
+
+/* ======= LOGO FLUTUANTE ======= */
+/*
+Logo que fica fixa (flutuando) no canto superior esquerdo.
+- position: fixed para ficar visivel ao rolar,
+- z-index alto para ficar sempre acima do menu e conteudo.
+- animation aplicada para efeito visual 
+- use com moderação (pode distrair).
+- a propriedade object-fit: contain garante que a imagem não distorça.
+- se quiser reduzir o impacto em acessibilidade, considere  remover animação ou permitir que o usuário reduza movimento via prefers-reduced-motion
+*/
+.logo {
+  position: fixed;/* fixa a logo na viewport */
+  top: 15px;/* distancia fo topo */
+  left: 15px;/* distancia da esquerda */
+  z-index: 1200;/* acima do botão e do nav */
+  animation: flutuar 3s ease-in-out infinite; /* animação continua */
+}
+
+/* Estilo interno da imagem da logo (tamanho e aparencia )*/
+.logo img {
+  width: 60px; /* largura da logo */
+  height: 60px;/* altura fixa para manter proporção */
+  object-fit: contain; /* mantém proporção sem cortar */
+  border-radius: 50%;/* deixa a imagem circular */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* sombra leve para destaque */
+}
+
+/* =======  ANIMAÇÃO DE FLUTUAR ======= */
+/* 
+keyframes para animação vertical simples.
+- usa transform, que é performático (GPU-accelerated).
+- para usuários que preferem menos movimento,
+adicione uma medida query:
+  @media (prefers-reduced-motion: reduce) { logo. { animation: none; } }
+*/
+@keyframes flutuar {
+  0%, 100% {
+    transform: translateY(0); /* posição inicial e final */
+  }
+  50% {
+    transform: translateY(-8px); /* sobe levemente no meii do circlo */
+  }
+}
+
+/* ======= animação de transição colmeia ======= */
+/* 
+esta parte controla toda a animação que aparece ao trocar de paginas - a logo cresce no centro enquanto as abelhas voam em volta e depois tudo desaparece.
+*/
+
+/* conteiner geral da animação */
+#animacaoTransicao{
+    position:fixed;
+    inset:0;
+
+    background:#fff8e7;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+/* a classe "ativa" é adicionada/removida via JS toda vez que a transição roda,
+   isso garante que a animação reinicie do zero a cada troca de página */
+#animacaoTransicao.ativa #logoAnimada{
+    animation: girarEntrar 1.2s ease forwards;
+}
+
+#logoAnimada{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* keyframes que faltavam: a logo/gif entra girando e cresce levemente */
+@keyframes girarEntrar {
+    0% {
+        transform: scale(0.6) rotate(-15deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05) rotate(5deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+/* respeita quem prefere menos movimento na tela */
+@media (prefers-reduced-motion: reduce) {
+    #animacaoTransicao.ativa #logoAnimada{
+        animation: none;
+    }
+}
+
+/* ======= fim da animação de transição colmeia ======= */
+
+/* ======= animação da abelhinha ======= */
+
+#animacaoGuia {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#abelha {
+  width: 60px;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity .5s, transform 1s ease;
+  animation: flutuar 2s ease-in-out infinite;
+  opacity: 0;
+}
+
+#mensagem {
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffe;
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #fc3;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -8px); }
+}
+
+#formContainer {
+  max-width: 400px;
+  margin: 150px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.campo {
+  display: none;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input, select, textarea {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#btnProximo {
+  margin-top: 10px;
+  background: #ffcc00;
+  color: #222;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  display: none;
+}
+
+#btnProximo:hover {
+  background: #ffd84d;
+}
+/* ======= fim da animação da abelhinha ======= */
+
+/* ===== Área onde ficam todos os cursos ===== */
+#containerCursos{
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+/* ===== Card do curso ===== */
+.cardCurso{
+    width: 350px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
+
+    text-align: center;
+
+    transition: .3s;
+}
+
+/* Efeito ao passar o mouse */
+.cardCurso:hover{
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+
+/* ===== Área da imagem do curso ===== */
+.thumbCurso{
+    width: 100%;
+    height: 200px;
+
+    background: #ececec;
+
+    border-radius: 15px;
+
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+/* Quando colocar imagem */
+.thumbCurso img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ===== Título ===== */
+.cardCurso h2{
+    font-size: 28px;
+
+    margin-bottom: 15px;
+
+    color: #222;
+}
+
+/* ===== Professor ===== */
+.cardCurso p{
+    font-size: 20px;
+
+    color: #555;
+
+    margin-bottom: 20px;
+}
+
+/* ===== Botão ===== */
+.cardCurso button{
+
+    width: 100%;
+
+    height: 55px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #f7b500;
+
+    color: #000;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+/* Hover do botão */
+.cardCurso button:hover{
+
+    background: #ffcb33;
+
+    transform: scale(1.03);
+
+}
+
+/* ==========================================
+   AJUSTES DA PÁGINA INICIAL - COLMEIA
+   (Cole abaixo do CSS anterior)
+========================================== */
+
+/* Centraliza melhor o conteúdo */
+main{
+    width:95%;
+    max-width:1400px;
+    margin:auto;
+}
+
+/* Hero ocupa mais espaço e fica centralizado */
+/*================ HERO =================*/
+
+#hero{
+
+    min-height:90vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:40px;
+
+}
+
+.logoHero{
+
+    width:220px;
+
+    margin-bottom:30px;
+
+}
+
+#hero h1{
+
+    font-size:55px;
+
+    margin-bottom:25px;
+
+}
+
+#hero p{
+
+    width:70%;
+
+    max-width:800px;
+
+    font-size:26px;
+
+    line-height:1.7;
+
+    margin-bottom:40px;
+
+}
+
+/* Todas as áreas da página ficam dentro de um container */
+#sobre,
+#cardsInicio,
+#comoFunciona,
+#final{
+
+    width:100%;
+    max-width:1200px;
+
+    margin:50px auto;
+
+    background:#ffffff;
+
+    border-radius:20px;
+
+    padding:50px;
+
+    box-sizing:border-box;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+#depoimentos{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:30px;
+
+}
+
+/* ==========================================
+   MEL PEQUENO
+========================================== */
+
+.melSeparador{
+
+    margin:15px 0;
+
+}
+
+.mel{
+
+    width:25px;
+    height:25px;
+
+    margin:auto;
+
+    background:#F4B400;
+
+    border-radius:5px;
+
+    transform:rotate(45deg);
+
+}
+
+.mel::before,
+.mel::after{
+
+    display:none;
+
+}
+
+/* ==========================================
+   TÍTULOS
+========================================== */
+
+#sobre h2,
+#comoFunciona h2,
+#depoimentos h2,
+#final h2{
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:40px;
+
+    margin-bottom:25px;
+
+    color:#d68c00;
+
+}
+
+/* ==========================================
+   PARÁGRAFOS
+========================================== */
+
+#sobre p,
+#depoimentos p,
+.passos p{
+
+    max-width:900px;
+
+    margin:auto;
+
+    line-height:1.8;
+
+    font-size:22px;
+
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+
+#cardsInicio{
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+    gap:35px;
+
+}
+
+.card{
+
+    width:320px;
+
+    min-height:260px;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    background:white;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.10);
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+/* ==========================================
+   PASSOS
+========================================== */
+
+.passos{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:35px;
+
+    margin-top:40px;
+
+}
+
+.passos div{
+
+    background:#fffbee;
+
+    padding:30px;
+
+    border-radius:18px;
+
+}
+
+/* ==========================================
+   BOTÃO
+========================================== */
+
+.btnHero{
+
+    margin-top:35px;
+
+    padding:18px 45px;
+
+    font-size:24px;
+
+    border-radius:15px;
+
+}
+
+/* ==========================================
+   ESPAÇAMENTO GERAL
+========================================== */
+
+section{
+
+    scroll-margin-top:100px;
+
+}
+
+/* ==========================================
+   MOEDA FDI (Favor de Interação)
+========================================== */
+
+.fdiBadge{
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1200;
+
+    background: #fff3cd;
+    border: 2px solid #ffcc00;
+    border-radius: 20px;
+
+    padding: 8px 16px;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+#fdiInfo,
+#enviarVideo,
+#comunidadeCursos{
+
+    width: 90%;
+    max-width: 900px;
+
+    margin: 40px auto;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+
+    text-align: left;
+}
+
+#fdiInfo h2,
+#enviarVideo h2,
+#comunidadeCursos h2{
+
+    text-align: center;
+    color: #d68c00;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+#fdiInfo p{
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* formulário de envio de vídeo */
+.campoVideo{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.campoVideo label{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.campoVideo input,
+.campoVideo textarea{
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+#btnEnviarVideo{
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #ffcc00;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#btnEnviarVideo:hover{
+    background: #ffd84d;
+}
+
+/* galeria de vídeos da comunidade */
+#semVideos{
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+#listaVideosComunidade{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.cardVideoComunidade{
+    width: 260px;
+
+    background: #fffbee;
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,.1);
+
+    text-align: center;
+}
+
+.cardVideoComunidade h3{
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.cardVideoComunidade .autorVideo{
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 8px;
+}
+
+.cardVideoComunidade .descVideo{
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #444;
+}
+
+.btnAssistirVideo{
+    background: #f7b500;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.btnAssistirVideo:hover{
+    background: #ffcb33;
+}
+
+@media (max-width: 480px){
+    .fdiBadge{
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+
+    #hero h1{ font-size: 28px; }
+    #hero p{ width: 90%; font-size: 18px; }
+    .logoHero{ width: 120px; }
+
+    .passos{ grid-template-columns: 1fr; }
+
+    #sobre, #cardsInicio, #comoFunciona, #final{
+        padding: 25px;
+    }
+
+    .card{ width: 100%; max-width: 320px; }
+}

@@ -1,0 +1,263 @@
+<!DOCTYPE html> <!-- abre o arquivo -->
+<html lang="pt-br"> <!-- define que o documento está em HTML5 e que o idioma é português do Brasil -->
+
+<head>
+    <meta charset="UTF-8"> <!--  Define o padrao de codificação de caracteres (UTF-8) para suportar acentos e caracteres especiais -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- garante que o site seja responsivo, ajustando-se a largura de tela -->
+    <title>colmeia🐝</title> <!-- titulo de aba do navegador -->
+    <link rel="stylesheet" href="Style.css"> <!-- importa o arquivo externo de estilos css -->
+</head>
+
+<body>
+
+  <!-- logo flutuante (movida para dentro do body, que é o correto) -->
+  <div class="logo">
+    <img src="abelhinha.png" alt="logo da colmeia">
+  </div>
+
+  <!-- saldo de moedas FDI (Favor de Interação) do usuário -->
+  <div class="fdiBadge">🪙 <span id="fdiBalance">0</span> FDI</div>
+
+  <!-- ======= animaçao de transição colmeia  ======= -->
+  <!-- esta seção cria a tela de animaçao que parece sempre que o usuario troca de pagina( inicio, cadastro, cursos...). ela cobre toda a tela e exibe o gif de carregamento (colmeia_intr) -->
+  <div id="animacaoTransicao">
+    <img src="loading_gif.gif" alt="Carregando..." id="logoAnimada">
+  </div>
+  <!-- ======= fim da animação de transição ======= -->
+
+
+<main>
+
+<section id="hero">
+
+    <img src="abelhinha.png" alt="Logo da Colmeia" class="logoHero">
+
+    <h1>Bem-vindo à Colmeia 🐝</h1>
+
+    <p>
+        Aprenda tecnologia de maneira simples,
+        no seu ritmo e sem complicações.
+    </p>
+
+    <a href="Cursos.html" class="btnHero link-pagina">
+        Começar Agora
+    </a>
+
+</section>
+
+<section class="melSeparador">
+
+    <div class="mel"></div>
+
+</section>
+
+<section id="sobre">
+
+<h2>O que é a Colmeia?</h2>
+
+<p>
+
+A Colmeia é um ambiente criado para ajudar pessoas
+a aprenderem tecnologia de forma fácil,
+com cursos acessíveis e linguagem simples.
+
+</p>
+
+</section>
+
+<section class="melSeparador">
+
+<div class="mel"></div>
+
+</section>
+
+
+<section id="cardsInicio">
+
+<div class="card">
+
+<h3>📚 Cursos</h3>
+
+<p>
+Aprenda do básico ao avançado.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>💼 Oportunidades</h3>
+
+<p>
+Encontre vagas e projetos.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>🤝 Comunidade</h3>
+
+<p>
+Troque experiências com outras pessoas.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>🎓 Certificados</h3>
+
+<p>
+Comprove sua evolução.
+</p>
+
+</div>
+
+</section>
+
+
+<section class="melSeparador">
+
+<div class="mel"></div>
+
+</section>
+
+
+<section id="comoFunciona">
+
+<h2>Como funciona?</h2>
+
+<div class="passos">
+
+<div>
+
+<h3>1️⃣</h3>
+
+<p>Escolha um curso.</p>
+
+</div>
+
+<div>
+
+<h3>2️⃣</h3>
+
+<p>Assista às aulas.</p>
+
+</div>
+
+<div>
+
+<h3>3️⃣</h3>
+
+<p>Pratique.</p>
+
+</div>
+
+<div>
+
+<h3>4️⃣</h3>
+
+<p>Conquiste novas oportunidades.</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="melSeparador">
+
+<div class="mel"></div>
+
+</section>
+
+<section id="depoimentos">
+
+<h2>Quem já faz parte da Colmeia</h2>
+
+<div class="card">
+
+<p>
+
+"Achei que nunca aprenderia informática,
+mas a Colmeia tornou tudo muito simples."
+
+</p>
+
+<strong>Maria • 63 anos</strong>
+
+</div>
+
+<div class="card">
+
+<p>
+
+"Hoje consigo usar o computador
+sem precisar pedir ajuda."
+
+</p>
+
+<strong>Carlos • 58 anos</strong>
+
+</div>
+
+</section>
+
+<section class="melSeparador">
+
+<div class="mel"></div>
+
+</section>
+
+<section id="final">
+
+<h2>
+
+Nunca é tarde para aprender.
+
+</h2>
+
+<a href="Cursos.html" class="btnHero link-pagina">
+
+Explorar Cursos
+
+</a>
+
+</section>
+
+</main>
+
+
+  <!--botão que abre o menu lateral no modo celular -->
+    <button id="cel-abrir">></button>
+
+    <!-- Menu lateral (nav = area de navegação principal) -->
+    <!-- A classe "fechado" indica que o menu começa escondido -->
+    <nav id="aba-cel" class="fechado">
+      <!-- Botão para fechar o menu -->
+        <button id="cel-fechar">x</button>
+
+  <!-- ======== MENU DE NAVEGAÇÃO PRINCIPAL ======== -->
+    <!--
+      Este menu exibe os principais links do site Colmeia.
+      Ele normalmente fica dentro do menu lateral ou no topo (dependendo da versão).
+      Cada <li> representa uma opção que leva o usuário a uma página diferente.
+    -->
+      <ul>
+        <!-- Link para a página inicial -->
+        <li><a href="Index.html" class="link-pagina">Início</a></li>
+
+        <!-- Link para a área de cursos -->
+        <li><a href="Cursos.html" class="link-pagina">Cursos</a></li>
+
+        <!-- Link para a página de cadastro -->
+        <li><a href="Cadastro.html" class="link-pagina">Cadastro</a></li>
+      </ul>
+    </nav>
+    <!-- ======== FIM DO MENU DE NAVEGAÇÃO PRINCIPAL ======== -->
+
+    <!-- importa o arquivo JavaScript que controla a interação do menu -->
+    <script src="Script.js"></script>
+</body>
+</html>

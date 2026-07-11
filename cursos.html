@@ -1,0 +1,135 @@
+<!DOCTYPE html> <!-- abre o arquivo -->
+<html lang="pt-br"> <!-- define que o documento está em HTML5 e que o idioma é português do Brasil -->
+
+<head>
+    <meta charset="UTF-8"> <!--  Define o padrao de codificação de caracteres (UTF-8) para suportar acentos e caracteres especiais -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- garante que o site seja responsivo, ajustando-se a largura de tela -->
+    <title>colmeia🐝</title> <!-- titulo de aba do navegador -->
+    <link rel="stylesheet" href="Style.css"> <!-- importa o arquivo externo de estilos css -->
+</head>
+
+<body>
+
+  <!-- logo flutuante (movida para dentro do body, que é o correto) -->
+  <div class="logo">
+    <img src="abelhinha.png" alt="logo da colmeia">
+  </div>
+
+  <!-- saldo de moedas FDI (Favor de Interação) do usuário -->
+  <div class="fdiBadge">🪙 <span id="fdiBalance">0</span> FDI</div>
+
+  <!-- ======= animaçao de transição colmeia  ======= -->
+  <!-- esta seção cria a tela de animaçao que parece sempre que o usuario troca de pagina( inicio, cadastro, cursos...). ela cobre toda a tela e exibe o gif de carregamento (colmeia_intr) -->
+  <div id="animacaoTransicao">
+    <img src="loading_gif.gif" alt="Carregando..." id="logoAnimada">
+  </div>
+  <!-- ======= fim da animação de transição ======= -->
+
+
+  <!-- conteudo principal da pagina (unificado em um único <main>) -->
+  <main>
+
+    <h1>cursos🐝</h1>
+    <p>vamos ver qual sua primeira exploração por mel, voando pelos horizontes?</p>
+
+    <section id="containerCursos">
+
+        <!-- Curso 1 -->
+        <div class="cardCurso">
+
+            <div class="thumbCurso">
+                <!-- Thumbnail do curso -->
+            </div>
+
+            <h2>Introdução ao Computador</h2>
+
+            <p>Professor João</p>
+
+            <button>Assistir Curso</button>
+
+        </div>
+
+        <!-- Curso 2 -->
+        <div class="cardCurso">
+
+            <div class="thumbCurso">
+                <!-- Thumbnail do curso -->
+            </div>
+
+            <h2>Internet Básica</h2>
+
+            <p>Professora Maria</p>
+
+            <button>Assistir Curso</button>
+
+        </div>
+
+    </section>
+
+    <!-- ======= Sistema de moedas FDI (Favor de Interação) ======= -->
+    <!-- por enquanto os vídeos e o saldo de moedas ficam salvos só no
+         navegador de cada pessoa (localStorage). quando o banco de dados
+         for criado, essa parte passa a ser compartilhada entre todo mundo -->
+
+    <section id="fdiInfo">
+      <h2>🪙 Moeda da Colmeia: FDI</h2>
+      <p>FDI significa <strong>Favor de Interação</strong>. Toda vez que você envia um vídeo tutorial pra comunidade, você ganha <strong>1 FDI</strong>. Use suas moedas pra assistir vídeos enviados por outras pessoas.</p>
+    </section>
+
+    <section id="enviarVideo">
+      <h2>📤 Envie seu vídeo tutorial</h2>
+      <form id="formVideo">
+        <div class="campoVideo">
+          <label for="tituloVideo">Título do vídeo:</label>
+          <input type="text" id="tituloVideo" required placeholder="Ex: Como usar o WhatsApp">
+        </div>
+
+        <div class="campoVideo">
+          <label for="autorVideo">Seu nome:</label>
+          <input type="text" id="autorVideo" required placeholder="Ex: Ana">
+        </div>
+
+        <div class="campoVideo">
+          <label for="linkVideo">Link do vídeo (YouTube, Drive, etc.):</label>
+          <input type="url" id="linkVideo" required placeholder="https://...">
+        </div>
+
+        <div class="campoVideo">
+          <label for="descVideo">Descrição curta:</label>
+          <textarea id="descVideo" rows="2" required placeholder="Do que se trata o vídeo?"></textarea>
+        </div>
+
+        <button type="submit" id="btnEnviarVideo">Enviar e ganhar 1 🪙 FDI</button>
+      </form>
+    </section>
+
+    <section id="comunidadeCursos">
+      <h2>🎥 Vídeos da comunidade</h2>
+      <p id="semVideos">Ainda não tem nenhum vídeo por aqui. Seja a primeira pessoa a enviar!</p>
+      <div id="listaVideosComunidade"></div>
+    </section>
+
+  </main>
+
+
+  <!--botão que abre o menu lateral no modo celular -->
+    <button id="cel-abrir">></button>
+
+    <!-- Menu lateral (nav = area de navegação principal) -->
+    <!-- A classe "fechado" indica que o menu começa escondido -->
+    <nav id="aba-cel" class="fechado">
+      <!-- Botão para fechar o menu -->
+        <button id="cel-fechar">x</button>
+
+        <ul>
+          <li><a href="Index.html" class="link-pagina">Início</a></li>
+          <li><a href="Cursos.html" class="link-pagina">cursos</a></li>
+          <li><a href="Cadastro.html" class="link-pagina">Cadastro</a></li>
+        </ul>
+
+    </nav>
+
+    <!-- importa o arquivo JavaScript que controla a interação do menu -->
+    <script src="Script.js"></script>
+</body>
+</html>
