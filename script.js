@@ -119,7 +119,7 @@ if (abelha && mensagem && btnProximo && campos.length > 0) {
       mensagem.textContent = "cadastro concluido! indo para os cursos...";
       mensagem.style.opacity = "1";
       setTimeout(() => {
-        window.location.href = "Cursos.html";
+        window.location.href = "cursos.html";
       }, 2000);
     }
   }
